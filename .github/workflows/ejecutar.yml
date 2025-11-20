@@ -1,0 +1,55 @@
+# Nombre del workflow que aparecerá en la pestaña "Actions" de GitHub.
+name: Workflow de Ejecución
+
+# Define los eventos que dispararán la ejecución de este workflow.
+on:
+  # Se ejecuta cuando se hace un push a la rama 'main'.
+  push:
+    branches: [ main ]
+
+  # Se ejecuta cuando se crea o actualiza un pull request contra la rama 'main'.
+  pull_request:
+    branches: [ main ]
+
+  # Permite ejecutar este workflow manualmente desde la interfaz de GitHub.
+  workflow_dispatch:
+
+# Agrupa todos los trabajos (jobs) que se ejecutarán.
+jobs:
+  # Define un trabajo llamado 'construir-y-probar'. Puedes nombrarlo como quieras.
+  construir-y-probar:
+    # Especifica el tipo de máquina virtual (runner) en la que se ejecutará el trabajo.
+    # 'ubuntu-latest' es una opción común y versátil.
+    runs-on: ubuntu-latest
+
+    # Los 'steps' son la secuencia de tareas que se ejecutarán en el trabajo.
+    steps:
+      # 1. Descarga tu código del repositorio en el runner.
+      # Es un paso esencial para que el workflow pueda acceder a tus archivos.
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Ejemplo de un paso que ejecuta comandos en la terminal.
+      # Puedes reemplazar estos comandos con los que necesites (instalar dependencias,
+      # ejecutar tests, compilar, etc.).
+      - name: Ejecutar comandos de ejemplo
+        run: |
+          echo "🚀 El workflow ha comenzado."
+          echo "📂 Listando los archivos en el directorio de trabajo:"
+          ls -la
+          echo "✅ El trabajo ha finalizado exitosamente."
+
+      # 3. (Opcional) Un paso para configurar un entorno específico, como Node.js.
+      # Descomenta y ajusta este paso si tu proyecto lo necesita.
+      # - name: Configurar Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20' # Especifica la versión de Node.js que necesitas
+      
+      # 4. (Opcional) Un paso para instalar dependencias de Node.js.
+      # - name: Instalar dependencias
+      #   run: npm install
+
+      # 5. (Opcional) Un paso para ejecutar pruebas.
+      # - name: Ejecutar pruebas
+      #   run: npm test
